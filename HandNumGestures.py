@@ -18,5 +18,5 @@ for label, confidence in result.labels:
 
 # Visualize the heatmap of the prediction on the image 
 # this shows where the model was looking to make its prediction.
-heatmap = model.visualize(img)
+heatmap = model.visualize()
 heatmap.show()
