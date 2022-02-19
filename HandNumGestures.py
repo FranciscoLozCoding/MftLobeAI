@@ -3,7 +3,7 @@ import os
 # video streamimng
 import cv2
 
-camIP = '10.42.0.104'
+camIP = '00.00.0.000'
 username = 'admin'
 password = 'admin'
 streamURL = 'rtsp://' + username + ':' + password + '@' + camIP + ':554/cam/realmonitor?channel=1&subtype=1'
