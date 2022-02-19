@@ -3,15 +3,7 @@ from lobe import ImageModel
 model = ImageModel.load('path/to/exported/model/folder')
 
 # OPTION 1: Predict from an image file
-result = model.predict_from_file('path/to/file.jpg')
-
-# OPTION 2: Predict from an image url
-result = model.predict_from_url('http://url/to/file.jpg')
-
-# OPTION 3: Predict from Pillow image
-from PIL import Image
-img = Image.open('path/to/file.jpg')
-result = model.predict(img)
+result = model.predict_from_file('../number-five-made-with-hand.jpg')
 
 # Print top prediction
 print(result.prediction)
