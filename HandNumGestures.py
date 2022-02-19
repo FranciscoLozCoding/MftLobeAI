@@ -2,8 +2,12 @@ from lobe import ImageModel
 
 model = ImageModel.load('./Hand Gestures TFLite')
 
+from PIL import Image
+img = Image.open('./number-five-made-with-hand.jpg')
+result = model.predict(img)
+
 # OPTION 1: Predict from an image file
-result = model.predict_from_file('./number-five-made-with-hand.jpg')
+# result = model.predict_from_file('./number-five-made-with-hand.jpg')
 
 # Print top prediction
 print(result.prediction)
