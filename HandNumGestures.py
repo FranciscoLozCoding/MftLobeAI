@@ -1,18 +1,4 @@
-# from lobe import ImageModel
-
-#model = ImageModel.load('./Hand Gestures TFLite')
-
-#from PIL import Image
-#img = Image.open('./number-five-made-with-hand.jpg')
-#result = model.predict(img)
-
-
-# Print top prediction
-#print(result.prediction)
-
-# Print all classes
-#for label, confidence in result.labels:
- #   print(f"{label}: {confidence*100}%")
+import os
 
 # video streamimng
 import cv2
@@ -60,6 +46,8 @@ while True:
         # Print all classes
         for label, confidence in result.labels:
           print(f"{label}: {confidence*100}%")
+        
+        os.remove(img_name)
 
 cam.release()
 
