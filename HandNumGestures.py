@@ -30,8 +30,6 @@ from PIL import Image
 
 model = ImageModel.load('./Hand Gestures TFLite')
 
-cam = cv2.VideoCapture(0)
-
 cv2.namedWindow("Count Fingers")
 
 img_counter = 0
