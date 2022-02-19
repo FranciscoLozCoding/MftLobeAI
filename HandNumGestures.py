@@ -15,42 +15,47 @@
  #   print(f"{label}: {confidence*100}%")
 
 
-# Import Pi Camera library
-from waggle.data.vision import Camera
-from time import sleep
+import cv2
 
 #Import Lobe python library
 from lobe import ImageModel
+from PIL import Image
 
-username = 'admin'
-password = 'admin'
-ip_address = '10.42.0.104'
-camera = Camera(f'rtsp://{username}:{password}@{ip_address}:554/cam/realmonitor?channel=1&subtype=1')
-
-# Load Lobe TF Lite model
-# --> Change model path
 model = ImageModel.load('./Hand Gestures TFLite')
 
+cam = cv2.VideoCapture(0)
 
+cv2.namedWindow("Count Fingers")
 
-if __name__ == '__main__':
-    # Start the camera preview, make slightly transparent to see any python output
-    #   Note: preview only shows if you have a monitor connected directly to the Pi
-    camera.start_preview(alpha=200)
-    # Pi Foundation recommends waiting 2s for light adjustment
-    sleep(5) 
-    # Optional image rotation for camera
-    # --> Change or comment out as needed
-    camera.rotation = 180
-    #Input image file path here
-    # --> Change image path as needed
-    camera.capture('./image.jpg') 
-    #Stop camera
-    camera.stop_preview()
+img_counter = 0
 
-    # Run photo through Lobe TF model and get prediction results
-    result = model.predict_from_file('./image.jpg')
+while True:
+    ret, frame = cam.read()
+    if not ret:
+        print("failed to grab frame")
+        break
+    cv2.imshow("Count Fingers", frame)
 
-    print(result.labels)
+    k = cv2.waitKey(1)
+    if k%256 == 27:
+        # ESC pressed
+        print("Escape hit, closing...")
+        break
+    elif k%256 == 32:
+        # SPACE pressed
+        img_name = "opencv_frame_{}.png".format(img_counter)
+        cv2.imwrite(img_name, frame)
+        print("{} written!".format(img_name))
+        img_counter += 1
 
-    sleep(1)
+        img = Image.open(img_name)
+        result = model.predict(img)
+        print(result.prediction)
+
+        # Print all classes
+        for label, confidence in result.labels:
+          print(f"{label}: {confidence*100}%")
+
+cam.release()
+
+cv2.destroyAllWindows()
