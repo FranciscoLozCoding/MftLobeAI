@@ -14,8 +14,15 @@
 #for label, confidence in result.labels:
  #   print(f"{label}: {confidence*100}%")
 
-
+# video streamimng
 import cv2
+import ThreadedStream 
+
+username = 'admin'
+password = 'admin'
+ip_address = '10.42.0.104'
+
+vs = ThreadedStream.ThreadedStream(src='rtsp://' + username + ':' + password + '@' + ip_address + '/cam/realmonitor?channel=1&subtype=1').start()
 
 #Import Lobe python library
 from lobe import ImageModel
@@ -30,7 +37,7 @@ cv2.namedWindow("Count Fingers")
 img_counter = 0
 
 while True:
-    ret, frame = cam.read()
+    ret, frame = vs.read()
     if not ret:
         print("failed to grab frame")
         break
