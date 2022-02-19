@@ -1,6 +1,6 @@
 from lobe import ImageModel
 
-model = ImageModel.load('path/to/exported/model/folder')
+model = ImageModel.load('../Hand Gestures TFLite')
 
 # OPTION 1: Predict from an image file
 result = model.predict_from_file('../number-five-made-with-hand.jpg')
