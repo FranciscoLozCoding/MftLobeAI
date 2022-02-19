@@ -16,13 +16,13 @@
 
 # video streamimng
 import cv2
-import ThreadedStream 
 
+camIP = '10.42.0.104'
 username = 'admin'
 password = 'admin'
-ip_address = '10.42.0.104'
+streamURL = 'rtsp://' + username + ':' + password + '@' + camIP + ':554/cam/realmonitor?channel=1&subtype=1'
 
-vs = ThreadedStream.ThreadedStream(src='rtsp://' + username + ':' + password + '@' + ip_address + '/cam/realmonitor?channel=1&subtype=1').start()
+cam = cv2.VideoCapture(streamURL)
 
 #Import Lobe python library
 from lobe import ImageModel
@@ -37,7 +37,7 @@ cv2.namedWindow("Count Fingers")
 img_counter = 0
 
 while True:
-    ret, frame = vs.read()
+    ret, frame = cam.read()
     if not ret:
         print("failed to grab frame")
         break
